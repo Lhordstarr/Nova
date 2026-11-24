@@ -1,0 +1,16 @@
+[package]
+name = "nova"
+version = "0.1.2"
+edition = "2021"
+
+[lib]
+name = "nova"
+path = "src/lib.rs"
+
+[[bin]]
+name = "nova"
+path = "src/main.rs"
+
+[dependencies]
+
+[dev-dependencies]

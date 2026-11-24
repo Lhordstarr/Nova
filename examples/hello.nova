@@ -1,0 +1,10 @@
+print "Hello, World!"
+
+create variable name = "Sharif"
+
+print name
+
+create variable first = 20
+create variable second = 5
+
+print first + second
