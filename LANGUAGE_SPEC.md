@@ -44,9 +44,12 @@ if age is greater than 18:
 
 Rules:
 
-- Use the same indentation inside a block.
+- Use spaces for indentation. Tabs are rejected.
+- Each block level must use a consistent number of spaces.
+- Mixed tabs and spaces are rejected.
 - Blank lines do not change indentation.
 - The block ends when indentation returns to the previous level.
+- A block must contain at least one statement. An empty block is an error.
 
 ## 5. Keywords
 
@@ -134,8 +137,11 @@ create variable age = 20
 Rules:
 
 - A variable name must be a valid identifier.
+- Keywords are reserved and cannot be used as variable names.
 - You cannot declare the same variable twice in the same scope.
+- Reassigning an existing variable without `create variable` is not supported in NOVA 0.1.
 - A variable can be used after it is declared.
+- Variables declared inside an `if` block are out of scope after the block ends.
 
 Example:
 
@@ -154,14 +160,23 @@ Output:
 
 ## 9. Printing
 
-Print can show strings, numbers, variables, expressions, or bare text.
+Print can show quoted strings, numbers, variables, expressions, or bare text.
 
 ```nova
 print "Hello, World!"
-print Hello, World!
 print 25
 print 20 + 5
+print (20 + 5) * 2
+print username
 ```
+
+Resolution rules:
+
+1. A quoted string is printed as a string.
+2. A number, parenthesized expression, arithmetic expression, or comparison expression is evaluated and printed.
+3. A single identifier is treated as a variable. If it is in scope, its value is printed. If it is not declared, NOVA reports an undefined variable error.
+4. Ordinary unquoted text that is not a valid expression is printed as a string.
+5. Text that resembles a malformed expression is reported as an error instead of being printed as text.
 
 Bare text does not need quotes:
 
@@ -170,13 +185,20 @@ print Welcome to NOVA
 print This is my first program
 ```
 
-If a single word matches a declared variable, NOVA prints the variable value. If it does not match a variable, NOVA prints the word as text.
+Examples:
 
 ```nova
 create variable username = "Sharif"
 
 print username        # prints Sharif
-print unknownname     # prints unknownname
+print Hello, World!   # prints Hello, World!
+print 25              # prints 25
+```
+
+An undeclared single identifier is not bare text:
+
+```nova
+print unknownname     # error: undefined variable 'unknownname'
 ```
 
 An empty print prints an empty line:
