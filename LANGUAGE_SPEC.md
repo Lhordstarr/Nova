@@ -57,6 +57,8 @@ These words have special meaning in NOVA:
 
 `print`, `create`, `variable`, `if`, `ask`, `and`, `store`, `as`, `is`, `greater`, `than`, `less`, `equal`, `not`, `or`, `to`
 
+All keywords are reserved and cannot be used as variable names.
+
 Simple meanings:
 
 - `print` — show a value or text
@@ -104,6 +106,16 @@ print (20 + 5) * 2
 ```
 
 `*` and `/` happen before `+` and `-`. Parentheses change the order.
+
+Comparisons also produce Boolean values:
+
+```nova
+create variable is_adult = age is greater than 18
+
+print is_adult
+```
+
+A comparison can be used anywhere an expression is allowed, including variable declarations and `print`.
 
 ## 7. Values and Types
 
@@ -209,7 +221,7 @@ print
 
 ## 10. Conditions
 
-Use `if` to run code only when a condition is true.
+Use `if` to run code only when its expression evaluates to `true`.
 
 ```nova
 create variable age = 20
@@ -217,6 +229,8 @@ create variable age = 20
 if age is greater than 18:
     print "You are an adult"
 ```
+
+The condition must be a Boolean expression. Passing a number, string, or undeclared variable to `if` is an error.
 
 Comparisons:
 
@@ -253,7 +267,7 @@ ask "What is your name?" and store as username
 print username
 ```
 
-The prompt is printed without a newline. The input is stored as a Number if it can be read as a number; otherwise it is stored as a String.
+The prompt is printed without a newline. Surrounding whitespace and newlines are trimmed before parsing. The input is stored as a finite Number if it can be parsed as one; `NaN` and `Infinity` are stored as Strings. Otherwise, the input is stored as a String.
 
 ## 12. Scopes
 
@@ -300,9 +314,16 @@ NOVA reports errors for:
 - invalid syntax
 - undefined variables in expressions
 - duplicate variables in the same scope
+- reassignment without `create variable`
+- reserved keywords used as variable names
 - type mismatches
+- non-Boolean `if` conditions
 - division by zero
 - inconsistent indentation
+- tabs in indentation
+- empty blocks
+- malformed expressions in `print`
+- unclosed strings and unknown escape sequences
 
 Example error:
 
